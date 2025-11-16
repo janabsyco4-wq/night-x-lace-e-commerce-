@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense, Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import AdminLayout from '@/components/admin/AdminLayout';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
@@ -778,14 +778,6 @@ export default function AdminSettingsPage() {
       </AdminLayout>
     }>
       <SettingsContent />
-    </Suspense>
-  );
-}
-
-export default function AdminSettingsPage() {
-  return (
-    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div></div>}>
-      <AdminSettingsPageContent />
     </Suspense>
   );
 }
