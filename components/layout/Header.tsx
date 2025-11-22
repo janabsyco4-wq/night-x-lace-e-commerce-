@@ -76,7 +76,7 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 shadow-lg" style={{backgroundColor: 'rgba(26, 26, 29, 1)'}}>
+    <header className="fixed top-0 left-0 right-0 z-50 shadow-lg" style={{backgroundColor: 'rgba(26, 26, 29, 1)', paddingRight: '17px'}}>
       {/* Top Bar */}
       <div style={{backgroundColor: 'var(--color-primary)'}} className="text-white py-2.5 overflow-hidden">
         <div className="container-custom">
