@@ -176,7 +176,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         {/* Top Bar */}
         <header className={`fixed top-0 right-0 z-30 border-b backdrop-blur-md transition-all duration-300 ${
           sidebarOpen ? 'left-0 lg:left-64' : 'left-0 lg:left-20'
-        }`} style={{backgroundColor: 'rgba(26, 26, 29, 0.95)', borderColor: 'rgba(212, 175, 55, 0.1)'}}>
+        }`} style={{backgroundColor: 'rgba(26, 26, 29, 0.95)', borderColor: 'rgba(212, 175, 55, 0.1)', paddingRight: '17px'}}>
           <div className="flex items-center justify-between px-6 py-4">
             <div className="flex items-center gap-4">
               <button
