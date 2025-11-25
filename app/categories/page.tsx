@@ -10,9 +10,11 @@ const DEFAULT_EMOJI = '💎';
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [totalProducts, setTotalProducts] = useState(0);
 
   useEffect(() => {
     fetchCategories();
+    fetchProductCount();
   }, []);
 
   const fetchCategories = async () => {
@@ -26,6 +28,18 @@ export default function CategoriesPage() {
       console.error('Failed to fetch categories:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchProductCount = async () => {
+    try {
+      const res = await fetch('/api/products');
+      const data = await res.json();
+      if (data.success) {
+        setTotalProducts(data.products?.length || 0);
+      }
+    } catch (error) {
+      console.error('Failed to fetch product count:', error);
     }
   };
 
@@ -77,7 +91,7 @@ export default function CategoriesPage() {
             </div>
             <div className="w-px h-12 bg-white/20"></div>
             <div>
-              <p className="text-3xl md:text-4xl font-bold" style={{color: 'var(--color-accent)'}}>500+</p>
+              <p className="text-3xl md:text-4xl font-bold" style={{color: 'var(--color-accent)'}}>{totalProducts}</p>
               <p className="text-sm md:text-base" style={{color: 'rgba(255, 255, 255, 0.6)'}}>Products</p>
             </div>
           </div>
@@ -114,6 +128,11 @@ export default function CategoriesPage() {
                     <h2 className="text-xs md:text-sm font-bold transition-colors group-hover:text-pink-400 line-clamp-2" style={{fontFamily: 'var(--font-family-serif)', color: 'white'}}>
                       {category.name}
                     </h2>
+                    
+                    {/* Product Count */}
+                    <p className="text-[10px] md:text-xs mt-1" style={{color: 'rgba(255, 255, 255, 0.5)'}}>
+                      {category.productCount || 0} {category.productCount === 1 ? 'Product' : 'Products'}
+                    </p>
                   </div>
                 </div>
               </Link>
