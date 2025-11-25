@@ -14,22 +14,7 @@ export default function Header() {
   const { user, isLoading } = useAuth();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 shadow-lg lg:mr-[17px]" style={{backgroundColor: 'rgba(26, 26, 29, 1)'}}>
-      {/* Top Bar */}
-      <div style={{backgroundColor: 'var(--color-primary)'}} className="text-white py-2.5 overflow-hidden">
-        <div className="container-custom">
-          <div className="flex justify-between items-center text-xs md:text-sm">
-            <div className="flex items-center gap-2">
-              <p className="font-medium">Free Shipping on Orders Over PKR 3000</p>
-            </div>
-            <div className="flex gap-3 md:gap-6 text-xs md:text-sm">
-              <Link href="/contact" className="hover:underline font-medium">Contact</Link>
-              <Link href="/faq" className="hover:underline font-medium">FAQ</Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <header className="fixed top-0 left-0 right-0 z-50 shadow-lg lg:mr-[10px]" style={{backgroundColor: 'rgba(26, 26, 29, 1)'}}>
       {/* Main Header */}
       <div className="container-custom py-4 md:py-5">
         <div className="flex items-center justify-between">
@@ -109,7 +94,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed top-[140px] right-0 bottom-0 w-64 shadow-2xl animate-slideIn lg:mr-[17px]" style={{backgroundColor: 'rgba(26, 26, 29, 1)', zIndex: 9999}}>
+        <div className="lg:hidden fixed top-[80px] right-0 bottom-0 w-64 shadow-2xl animate-slideIn lg:mr-[10px]" style={{backgroundColor: 'rgba(26, 26, 29, 1)', zIndex: 9999}}>
           <nav className="py-6 px-4 flex flex-col gap-4">
             {['Home', 'Shop', 'Categories', 'Blog', 'About', 'Contact'].map((item) => (
               <Link 

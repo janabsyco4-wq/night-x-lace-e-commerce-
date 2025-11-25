@@ -86,6 +86,55 @@ export default function OrderSuccessPage() {
               </p>
             </div>
 
+            {/* Guest User Message */}
+            {!isLoggedIn && (
+              <div className="p-6 rounded-xl mb-8 border-2" style={{backgroundColor: 'rgba(212, 175, 55, 0.1)', borderColor: 'var(--color-accent)'}}>
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style={{backgroundColor: 'var(--color-accent)'}}>
+                    <span className="text-xl">📦</span>
+                  </div>
+                  <div className="flex-1 text-left">
+                    <h3 className="font-bold text-lg mb-2" style={{color: 'var(--color-accent)'}}>
+                      Track Your Order Anytime!
+                    </h3>
+                    <p className="text-sm mb-3" style={{color: 'rgba(255, 255, 255, 0.9)'}}>
+                      Want to track your order and view your complete order history?
+                    </p>
+                    <div className="space-y-2 text-sm" style={{color: 'rgba(255, 255, 255, 0.8)'}}>
+                      <p className="flex items-start gap-2">
+                        <span style={{color: 'var(--color-accent)'}}>✓</span>
+                        <span><strong>Register or Login</strong> with the same email you used for this order</span>
+                      </p>
+                      <p className="flex items-start gap-2">
+                        <span style={{color: 'var(--color-accent)'}}>✓</span>
+                        <span>All your orders will be <strong>automatically linked</strong> to your account</span>
+                      </p>
+                      <p className="flex items-start gap-2">
+                        <span style={{color: 'var(--color-accent)'}}>✓</span>
+                        <span>Track order status, view history, and manage everything in one place</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3 mt-4">
+                  <Link 
+                    href="/register" 
+                    className="flex-1 px-6 py-3 rounded-full text-center font-semibold shadow-lg hover:shadow-xl transition-all"
+                    style={{backgroundColor: 'var(--color-accent)', color: '#0f0f11'}}
+                  >
+                    Create Account Now
+                  </Link>
+                  <Link 
+                    href="/login" 
+                    className="flex-1 px-6 py-3 rounded-full text-center font-semibold border-2 hover:bg-white/10 transition-all"
+                    style={{color: 'var(--color-accent)', borderColor: 'var(--color-accent)'}}
+                  >
+                    Already Have Account? Login
+                  </Link>
+                </div>
+              </div>
+            )}
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {isLoggedIn ? (
                 <>
@@ -100,9 +149,6 @@ export default function OrderSuccessPage() {
                 <>
                   <Link href="/shop" className="px-8 py-4 rounded-full text-white font-semibold shadow-lg hover:shadow-xl transition-all" style={{backgroundColor: 'var(--color-primary)'}}>
                     Continue Shopping
-                  </Link>
-                  <Link href="/register" className="px-8 py-4 rounded-full font-semibold border-2 hover:bg-white/10 transition-all" style={{color: 'var(--color-accent)', borderColor: 'var(--color-accent)'}}>
-                    Create Account
                   </Link>
                 </>
               )}

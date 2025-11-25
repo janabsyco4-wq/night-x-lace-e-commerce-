@@ -205,6 +205,7 @@ export default function AdminMessagesPage() {
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">From</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Subject</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Date</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Mark Read</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase">Actions</th>
                     </tr>
                   </thead>
@@ -244,6 +245,29 @@ export default function AdminMessagesPage() {
                           <div className="flex items-center gap-2">
                             <Calendar size={16} className="text-gray-400" />
                             {new Date(message.createdAt).toLocaleDateString()}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div 
+                            className="flex items-center justify-center"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={message.isRead}
+                              onChange={(e) => {
+                                e.stopPropagation();
+                                if (!message.isRead) {
+                                  markAsRead(message._id);
+                                }
+                              }}
+                              className="w-5 h-5 rounded cursor-pointer accent-green-500"
+                              style={{
+                                accentColor: '#22c55e',
+                                cursor: 'pointer'
+                              }}
+                              title={message.isRead ? "Already marked as read" : "Mark as read"}
+                            />
                           </div>
                         </td>
                         <td className="px-6 py-4">
@@ -289,15 +313,38 @@ export default function AdminMessagesPage() {
                         {message.isRead ? 'Read' : 'Unread'}
                       </span>
                     </div>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDelete(message._id);
-                      }}
-                      className="text-red-400 hover:text-red-300"
-                    >
-                      <X size={18} />
-                    </button>
+                    <div className="flex items-center gap-3">
+                      <div 
+                        className="flex items-center"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={message.isRead}
+                          onChange={(e) => {
+                            e.stopPropagation();
+                            if (!message.isRead) {
+                              markAsRead(message._id);
+                            }
+                          }}
+                          className="w-5 h-5 rounded cursor-pointer accent-green-500"
+                          style={{
+                            accentColor: '#22c55e',
+                            cursor: 'pointer'
+                          }}
+                          title={message.isRead ? "Already marked as read" : "Mark as read"}
+                        />
+                      </div>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDelete(message._id);
+                        }}
+                        className="text-red-400 hover:text-red-300"
+                      >
+                        <X size={18} />
+                      </button>
+                    </div>
                   </div>
 
                   <div>

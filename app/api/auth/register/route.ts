@@ -36,6 +36,27 @@ export async function POST(request: NextRequest) {
       phone,
     });
 
+    // Link existing orders with the same email to this user account
+    try {
+      const Order = (await import('@/models/Order')).default;
+      const linkedOrders = await Order.updateMany(
+        { 
+          'customer.email': email.toLowerCase(),
+          userId: { $exists: false } // Only update orders without a userId
+        },
+        { 
+          $set: { userId: user._id }
+        }
+      );
+      
+      if (linkedOrders.modifiedCount > 0) {
+        console.log(`Linked ${linkedOrders.modifiedCount} existing orders to user ${user.email}`);
+      }
+    } catch (orderLinkError) {
+      console.error('Error linking orders:', orderLinkError);
+      // Don't fail registration if order linking fails
+    }
+
     // Generate JWT token
     const token = jwt.sign(
       { userId: user._id, email: user.email },

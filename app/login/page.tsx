@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Lock, Mail, Eye, EyeOff, ShoppingBag, Heart, Star } from 'lucide-react';
+import { Eye, EyeOff, ShoppingBag, Heart, Star } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,6 +14,14 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Redirect if already logged in
+  useEffect(() => {
+    const token = localStorage.getItem('user_token');
+    if (token) {
+      router.push('/dashboard');
+    }
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +41,7 @@ export default function LoginPage() {
         localStorage.setItem('user_token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
         window.dispatchEvent(new Event('userLoggedIn'));
-        router.push('/dashboard');
+        window.location.href = '/dashboard';
       } else {
         setError(data.message || 'Login failed');
       }
@@ -148,17 +156,12 @@ export default function LoginPage() {
                 Email Address
               </label>
               <div className="relative group">
-                <Mail 
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 transition-colors" 
-                  size={20} 
-                  style={{color: 'rgba(255, 255, 255, 0.4)'}} 
-                />
                 <input
                   type="email"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-xl border-2 focus:outline-none transition-all"
+                  className="w-full pl-4 pr-4 py-3.5 rounded-xl border-2 focus:outline-none transition-all"
                   style={{
                     backgroundColor: 'rgba(26, 26, 29, 0.8)', 
                     borderColor: 'rgba(212, 175, 55, 0.2)', 
@@ -177,17 +180,12 @@ export default function LoginPage() {
                 Password
               </label>
               <div className="relative group">
-                <Lock 
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 transition-colors" 
-                  size={20} 
-                  style={{color: 'rgba(255, 255, 255, 0.4)'}} 
-                />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
                   value={formData.password}
                   onChange={(e) => setFormData({...formData, password: e.target.value})}
-                  className="w-full pl-12 pr-14 py-3.5 rounded-xl border-2 focus:outline-none transition-all"
+                  className="w-full pl-4 pr-14 py-3.5 rounded-xl border-2 focus:outline-none transition-all"
                   style={{
                     backgroundColor: 'rgba(26, 26, 29, 0.8)', 
                     borderColor: 'rgba(212, 175, 55, 0.2)', 
@@ -247,13 +245,16 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <Link 
-              href="/" 
-              className="block text-sm font-medium hover:underline transition-colors" 
+            <button
+              onClick={() => {
+                localStorage.setItem('guest_mode', 'true');
+                router.push('/');
+              }}
+              className="block w-full text-sm font-medium hover:underline transition-colors" 
               style={{color: 'rgba(255, 255, 255, 0.6)'}}
             >
               Continue Shopping as Guest →
-            </Link>
+            </button>
           </div>
         </div>
       </div>

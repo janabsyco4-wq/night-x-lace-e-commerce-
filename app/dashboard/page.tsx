@@ -34,7 +34,8 @@ export default function DashboardPage() {
   const fetchUserOrders = async (userData: any) => {
     try {
       console.log('🔍 Fetching orders for user:', userData);
-      const response = await fetch('/api/orders');
+      // Pass email to API to fetch orders linked to this user
+      const response = await fetch(`/api/orders?email=${encodeURIComponent(userData.email)}`);
       const data = await response.json();
 
       console.log('📦 API Response:', {
@@ -78,7 +79,8 @@ export default function DashboardPage() {
   const handleLogout = () => {
     localStorage.removeItem('user_token');
     localStorage.removeItem('user');
-    router.push('/');
+    window.dispatchEvent(new Event('userLoggedOut'));
+    window.location.href = '/login';
   };
 
   const getStatusIcon = (status: string) => {
@@ -105,7 +107,7 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#0f0f11'}}>
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto mb-4" style={{borderColor: 'var(--color-primary)'}}></div>
           <p style={{color: 'white'}}>Loading your dashboard...</p>
@@ -119,7 +121,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen py-8 md:py-12" style={{backgroundColor: '#0f0f11'}}>
+    <div className="min-h-screen py-8 md:py-12">
       <div className="container-custom max-w-7xl">
         {/* Header */}
         <div className="mb-6 md:mb-8 flex items-center justify-between">

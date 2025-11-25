@@ -13,19 +13,21 @@ import TopBanner from '@/components/home/TopBanner';
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAdminRoute = pathname?.startsWith('/admin');
+  const isAuthRoute = pathname === '/login' || pathname === '/register';
+  const isHomePage = pathname === '/';
 
   return (
     <AuthProvider>
       <CartProvider>
         <WishlistProvider>
           <ScrollToTop />
-          {!isAdminRoute && <TopBanner />}
-          {!isAdminRoute && <Header />}
-          <main className={`min-h-screen ${!isAdminRoute ? 'pt-[140px] md:pt-[150px]' : ''}`}>
+          {!isAdminRoute && !isAuthRoute && <TopBanner />}
+          {!isAdminRoute && !isAuthRoute && <Header />}
+          <main className={`min-h-screen ${!isAdminRoute && !isHomePage && !isAuthRoute ? 'pt-[59px] md:pt-[73px]' : ''}`}>
             {children}
           </main>
-          {!isAdminRoute && <Footer />}
-          {!isAdminRoute && <AdminShortcut />}
+          {!isAdminRoute && !isAuthRoute && <Footer />}
+          {!isAdminRoute && !isAuthRoute && <AdminShortcut />}
         </WishlistProvider>
       </CartProvider>
     </AuthProvider>

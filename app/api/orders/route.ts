@@ -111,8 +111,21 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
     const search = searchParams.get('search');
+    const userId = searchParams.get('userId');
+    const email = searchParams.get('email');
 
     const query: any = {};
+
+    // Filter by userId or email for logged-in users
+    if (userId) {
+      query.userId = userId;
+    } else if (email) {
+      // Also show orders placed with the same email before registration
+      query.$or = [
+        { userId: userId },
+        { 'customer.email': email.toLowerCase() }
+      ];
+    }
 
     if (status && status !== 'all') {
       query.status = status;

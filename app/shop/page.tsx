@@ -153,10 +153,10 @@ function ShopPageContent() {
               <span className="font-medium" style={{color: 'var(--color-accent)'}}>✨ Premium Collection</span>
             </div>
             
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-2 sm:mb-3 md:mb-4" style={{fontFamily: 'var(--font-family-serif)', color: 'white'}}>
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 sm:mb-3 md:mb-4" style={{fontFamily: 'var(--font-family-serif)', color: 'white'}}>
               Shop All Products
             </h1>
-            <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl max-w-2xl mx-auto px-4" style={{color: 'rgba(255, 255, 255, 0.7)'}}>
+            <p className="text-xs sm:text-sm md:text-base lg:text-lg max-w-2xl mx-auto px-4" style={{color: 'rgba(255, 255, 255, 0.7)'}}>
               Discover our complete collection of premium lingerie and intimate wear
             </p>
           </div>
@@ -242,9 +242,12 @@ function ShopPageContent() {
                 <div className="flex flex-wrap justify-center -mx-1 sm:-mx-2 md:-mx-3">
                   {paginatedProducts.map(product => (
                     <div key={product._id} className="w-[45%] sm:w-1/2 md:w-1/2 lg:w-1/4 px-1 sm:px-2 md:px-3 mb-3 sm:mb-4 md:mb-6">
-                      <div className="flex flex-col gap-1.5 sm:gap-2 md:gap-4 bg-[#1f1f23] border border-[#333] rounded-lg sm:rounded-xl md:rounded-2xl p-2 sm:p-2 md:p-4 hover:bg-[#29292d] transition">
+                      <div 
+                        onClick={() => router.push(`/products/${product.slug || product._id}`)}
+                        className="flex flex-col bg-[#1f1f23] border border-[#333] rounded-lg sm:rounded-xl md:rounded-2xl overflow-hidden hover:bg-[#29292d] transition cursor-pointer"
+                      >
                         {/* Image */}
-                        <div className="w-full h-36 sm:h-48 md:h-56 lg:h-64 rounded-md md:rounded-xl overflow-hidden bg-gray-700">
+                        <div className="w-full aspect-square overflow-hidden bg-gray-700">
                           <img
                             src={product.images?.[0] || '/placeholder.jpg'}
                             alt={product.name}
@@ -253,47 +256,29 @@ function ShopPageContent() {
                         </div>
 
                         {/* Content */}
-                        <div className="flex flex-col flex-1">
-                          <h3 className="text-xs sm:text-sm md:text-lg font-semibold text-white line-clamp-1">
+                        <div className="p-2 sm:p-3">
+                          <h3 className="text-xs sm:text-sm md:text-base font-semibold text-white line-clamp-1 mb-1">
                             {product.name}
                           </h3>
                           
                           {/* Rating Stars */}
-                          <div className="flex items-center gap-0.5 mt-0.5 sm:mt-1">
+                          <div className="flex items-center gap-0.5 mb-1">
                             {[...Array(5)].map((_, i) => (
                               <Star 
                                 key={i} 
                                 size={10} 
-                                className={`sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 ${i < Math.floor(product.rating || 0) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-600'}`} 
+                                className={`sm:w-3 sm:h-3 ${i < Math.floor(product.rating || 0) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-600'}`} 
                               />
                             ))}
-                            <span className="text-[9px] sm:text-[10px] md:text-xs text-gray-400 ml-0.5 sm:ml-1">
+                            <span className="text-[9px] sm:text-[10px] text-gray-400 ml-0.5">
                               ({product.reviewCount || 0})
                             </span>
                           </div>
 
-                          <p className="text-gray-400 text-xs md:text-sm mt-1 line-clamp-2 hidden sm:block">
-                            {product.description || 'Soft, breathable fabric with premium comfort.'}
-                          </p>
-
                           {/* Price */}
-                          <div className="mt-1 sm:mt-2 md:mt-3">
-                            <span className="text-pink-500 font-bold text-sm sm:text-base md:text-xl block">
-                              Rs {product.price?.toLocaleString()}
-                            </span>
-                          </div>
-
-                          {/* Button */}
-                          <button
-                            onClick={() => {
-                              router.push(`/products/${product.slug || product._id}`);
-                            }}
-                            className="w-full mt-1 sm:mt-2 md:mt-3 px-1.5 sm:px-2 md:px-4 py-1.5 sm:py-2 rounded-md sm:rounded-lg border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white transition text-[9px] sm:text-[10px] md:text-xs min-h-[32px] sm:min-h-[36px] md:min-h-[44px] flex items-center justify-center gap-1 md:gap-2"
-                          >
-                            <Eye size={12} className="sm:w-3.5 sm:h-3.5 md:w-4 md:h-4" />
-                            <span className="hidden sm:inline">Quick View</span>
-                            <span className="sm:hidden">View</span>
-                          </button>
+                          <span className="text-pink-500 font-bold text-sm sm:text-base md:text-lg block">
+                            Rs {product.price?.toLocaleString()}
+                          </span>
                         </div>
                       </div>
                     </div>

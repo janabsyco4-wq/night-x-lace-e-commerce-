@@ -29,6 +29,8 @@ export default function EditProductPage() {
 
   const availableSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Free Size'];
   const availableColors = ['Black', 'White', 'Red', 'Pink', 'Blue', 'Purple', 'Green', 'Yellow', 'Beige', 'Nude'];
+  const [customColor, setCustomColor] = useState('');
+  const [customSize, setCustomSize] = useState('');
 
   useEffect(() => {
     fetchProduct();
@@ -156,12 +158,46 @@ export default function EditProductPage() {
     });
   };
 
+  const addCustomSize = () => {
+    if (customSize.trim() && !formData.sizes.includes(customSize.trim())) {
+      setFormData({
+        ...formData,
+        sizes: [...formData.sizes, customSize.trim()],
+      });
+      setCustomSize('');
+    }
+  };
+
+  const removeSize = (size: string) => {
+    setFormData({
+      ...formData,
+      sizes: formData.sizes.filter(s => s !== size),
+    });
+  };
+
   const toggleColor = (color: string) => {
     setFormData({
       ...formData,
       colors: formData.colors.includes(color)
         ? formData.colors.filter(c => c !== color)
         : [...formData.colors, color],
+    });
+  };
+
+  const addCustomColor = () => {
+    if (customColor.trim() && !formData.colors.includes(customColor.trim())) {
+      setFormData({
+        ...formData,
+        colors: [...formData.colors, customColor.trim()],
+      });
+      setCustomColor('');
+    }
+  };
+
+  const removeColor = (color: string) => {
+    setFormData({
+      ...formData,
+      colors: formData.colors.filter(c => c !== color),
     });
   };
 
@@ -314,7 +350,9 @@ export default function EditProductPage() {
           {/* Sizes */}
           <div className="bg-gray-800 p-6 rounded-lg">
             <h2 className="text-xl font-semibold text-white mb-4">Available Sizes</h2>
-            <div className="flex flex-wrap gap-2">
+            
+            {/* Preset Sizes */}
+            <div className="flex flex-wrap gap-2 mb-4">
               {availableSizes.map((size) => (
                 <button
                   key={size}
@@ -330,12 +368,67 @@ export default function EditProductPage() {
                 </button>
               ))}
             </div>
+
+            {/* Custom Size Input */}
+            <div className="border-t border-gray-700 pt-4">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Add Custom Size
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={customSize}
+                  onChange={(e) => setCustomSize(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addCustomSize())}
+                  className="flex-1 px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-pink-500"
+                  placeholder="e.g., 38D, 40DD, Free Size"
+                />
+                <button
+                  type="button"
+                  onClick={addCustomSize}
+                  className="px-6 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-lg transition-colors"
+                >
+                  Add
+                </button>
+              </div>
+              <p className="text-xs text-gray-400 mt-1">
+                Enter any custom size (e.g., 38D, 40DD, One Size)
+              </p>
+            </div>
+
+            {/* Selected Sizes */}
+            {formData.sizes.length > 0 && (
+              <div className="border-t border-gray-700 pt-4 mt-4">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Selected Sizes ({formData.sizes.length})
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {formData.sizes.map(size => (
+                    <div
+                      key={size}
+                      className="flex items-center gap-2 px-3 py-2 bg-pink-600 text-white rounded-lg"
+                    >
+                      <span>{size}</span>
+                      <button
+                        type="button"
+                        onClick={() => removeSize(size)}
+                        className="hover:text-red-300 transition-colors font-bold"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Colors */}
           <div className="bg-gray-800 p-6 rounded-lg">
             <h2 className="text-xl font-semibold text-white mb-4">Available Colors</h2>
-            <div className="flex flex-wrap gap-2">
+            
+            {/* Preset Colors */}
+            <div className="flex flex-wrap gap-2 mb-4">
               {availableColors.map((color) => (
                 <button
                   key={color}
@@ -351,6 +444,59 @@ export default function EditProductPage() {
                 </button>
               ))}
             </div>
+
+            {/* Custom Color Input */}
+            <div className="border-t border-gray-700 pt-4">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Add Custom Color
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={customColor}
+                  onChange={(e) => setCustomColor(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addCustomColor())}
+                  className="flex-1 px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-pink-500"
+                  placeholder="e.g., Navy Blue, #FF5733, Burgundy"
+                />
+                <button
+                  type="button"
+                  onClick={addCustomColor}
+                  className="px-6 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-lg transition-colors"
+                >
+                  Add
+                </button>
+              </div>
+              <p className="text-xs text-gray-400 mt-1">
+                Enter color name or hex code (e.g., #7283872)
+              </p>
+            </div>
+
+            {/* Selected Colors */}
+            {formData.colors.length > 0 && (
+              <div className="border-t border-gray-700 pt-4 mt-4">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Selected Colors ({formData.colors.length})
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {formData.colors.map(color => (
+                    <div
+                      key={color}
+                      className="flex items-center gap-2 px-3 py-2 bg-pink-600 text-white rounded-lg"
+                    >
+                      <span>{color}</span>
+                      <button
+                        type="button"
+                        onClick={() => removeColor(color)}
+                        className="hover:text-red-300 transition-colors font-bold"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Settings */}

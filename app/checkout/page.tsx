@@ -198,40 +198,40 @@ export default function CheckoutPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative py-12 md:py-16 overflow-hidden">
+      <section className="relative py-6 md:py-16 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 w-48 h-48 rounded-full" style={{background: 'radial-gradient(circle, var(--color-primary) 0%, transparent 70%)'}}></div>
           <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full" style={{background: 'radial-gradient(circle, var(--color-accent) 0%, transparent 70%)'}}></div>
         </div>
         
         <div className="container-custom relative text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full shadow-md border mb-4" style={{backgroundColor: 'rgba(212, 175, 55, 0.1)', borderColor: 'var(--color-accent)'}}>
-            <Lock size={16} style={{color: 'var(--color-accent)'}} />
-            <span className="text-sm font-medium" style={{color: 'var(--color-accent)'}}>Secure Checkout</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full shadow-md border mb-2 md:mb-4" style={{backgroundColor: 'rgba(212, 175, 55, 0.1)', borderColor: 'var(--color-accent)'}}>
+            <Lock size={14} className="md:w-4 md:h-4" style={{color: 'var(--color-accent)'}} />
+            <span className="text-xs md:text-sm font-medium" style={{color: 'var(--color-accent)'}}>Secure Checkout</span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl font-bold" style={{fontFamily: 'var(--font-family-serif)', color: 'white'}}>
+          <h1 className="text-2xl md:text-5xl font-bold" style={{fontFamily: 'var(--font-family-serif)', color: 'white'}}>
             Checkout
           </h1>
         </div>
       </section>
 
-      <div className="min-h-screen pb-12">
+      <div className="min-h-screen pb-6 md:pb-12">
         <div className="container-custom">
           <form onSubmit={handleSubmit}>
-            <div className="grid lg:grid-cols-3 gap-8">
+            <div className="grid lg:grid-cols-3 gap-4 md:gap-8">
               {/* Checkout Form */}
-              <div className="lg:col-span-2 space-y-6">
+              <div className="lg:col-span-2 space-y-3 md:space-y-6">
                 {/* Payment Method */}
-                <div className="p-6 rounded-2xl border backdrop-blur-sm" style={{backgroundColor: 'transparent', borderColor: 'rgba(212, 175, 55, 0.3)'}}>
-                  <div className="flex items-center gap-3 mb-6">
-                    <CreditCard size={24} style={{color: 'var(--color-accent)'}} />
-                    <h2 className="text-2xl font-bold" style={{fontFamily: 'var(--font-family-serif)', color: 'white'}}>
+                <div className="p-3 md:p-6 rounded-xl md:rounded-2xl border backdrop-blur-sm" style={{backgroundColor: 'transparent', borderColor: 'rgba(212, 175, 55, 0.3)'}}>
+                  <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
+                    <CreditCard size={20} className="md:w-6 md:h-6" style={{color: 'var(--color-accent)'}} />
+                    <h2 className="text-lg md:text-2xl font-bold" style={{fontFamily: 'var(--font-family-serif)', color: 'white'}}>
                       Payment Method
                     </h2>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-3 gap-2 md:gap-4">
                     {/* Cash on Delivery */}
                     <label className="relative cursor-pointer">
                       <input
@@ -242,10 +242,10 @@ export default function CheckoutPage() {
                         onChange={handleChange}
                         className="peer sr-only"
                       />
-                      <div className="p-4 rounded-xl border-2 text-center transition-all peer-checked:border-4 hover:bg-white/5" style={{borderColor: formData.paymentMethod === 'cod' ? 'var(--color-primary)' : 'rgba(212, 175, 55, 0.3)'}}>
-                        <div className="text-3xl mb-2">💵</div>
-                        <div className="font-semibold text-sm mb-1" style={{color: 'white'}}>Cash on Delivery</div>
-                        <div className="text-xs" style={{color: 'rgba(255, 255, 255, 0.7)'}}>Pay on delivery</div>
+                      <div className="p-2 md:p-4 rounded-lg md:rounded-xl border-2 text-center transition-all peer-checked:border-4 hover:bg-white/5" style={{borderColor: formData.paymentMethod === 'cod' ? 'var(--color-primary)' : 'rgba(212, 175, 55, 0.3)'}}>
+                        <div className="text-2xl md:text-3xl mb-1 md:mb-2">💵</div>
+                        <div className="font-semibold text-xs md:text-sm mb-0.5 md:mb-1" style={{color: 'white'}}>Cash on Delivery</div>
+                        <div className="text-[10px] md:text-xs" style={{color: 'rgba(255, 255, 255, 0.7)'}}>Pay on delivery</div>
                       </div>
                       {formData.paymentMethod === 'cod' && (
                         <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center" style={{backgroundColor: 'var(--color-primary)'}}>
@@ -297,11 +297,11 @@ export default function CheckoutPage() {
                     </h2>
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-3 md:space-y-4">
                     {/* Contact Information */}
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid md:grid-cols-2 gap-3 md:gap-4">
                       <div>
-                        <label className="block text-sm font-medium mb-2" style={{color: 'white'}}>
+                        <label className="block text-xs md:text-sm font-medium mb-1 md:mb-2" style={{color: 'white'}}>
                           Full Name *
                         </label>
                         <input
@@ -310,7 +310,7 @@ export default function CheckoutPage() {
                           required
                           value={formData.fullName}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 transition-all"
+                          className="w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border focus:outline-none focus:ring-2 transition-all text-sm md:text-base"
                           style={{
                             backgroundColor: 'rgba(26, 26, 29, 0.8)',
                             borderColor: 'rgba(212, 175, 55, 0.3)',
@@ -321,7 +321,7 @@ export default function CheckoutPage() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium mb-2" style={{color: 'white'}}>
+                        <label className="block text-xs md:text-sm font-medium mb-1 md:mb-2" style={{color: 'white'}}>
                           Phone Number *
                         </label>
                         <input
@@ -330,7 +330,7 @@ export default function CheckoutPage() {
                           required
                           value={formData.phone}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 transition-all"
+                          className="w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border focus:outline-none focus:ring-2 transition-all text-sm md:text-base"
                           style={{
                             backgroundColor: 'rgba(26, 26, 29, 0.8)',
                             borderColor: 'rgba(212, 175, 55, 0.3)',
@@ -342,7 +342,7 @@ export default function CheckoutPage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium mb-2" style={{color: 'white'}}>
+                      <label className="block text-xs md:text-sm font-medium mb-1 md:mb-2" style={{color: 'white'}}>
                         Email Address *
                       </label>
                       <input
@@ -396,8 +396,7 @@ export default function CheckoutPage() {
                             <label className="block text-sm font-medium mb-2" style={{color: 'white'}}>
                               City *
                             </label>
-                            <input
-                              type="text"
+                            <select
                               name="city"
                               required
                               value={formData.city}
@@ -408,8 +407,176 @@ export default function CheckoutPage() {
                                 borderColor: 'rgba(212, 175, 55, 0.3)',
                                 color: 'white'
                               }}
-                              placeholder="e.g., Lahore, Karachi"
-                            />
+                            >
+                              <option value="">Select City</option>
+                              <optgroup label="Punjab">
+                                <option value="Lahore">Lahore</option>
+                                <option value="Faisalabad">Faisalabad</option>
+                                <option value="Rawalpindi">Rawalpindi</option>
+                                <option value="Multan">Multan</option>
+                                <option value="Gujranwala">Gujranwala</option>
+                                <option value="Sialkot">Sialkot</option>
+                                <option value="Bahawalpur">Bahawalpur</option>
+                                <option value="Sargodha">Sargodha</option>
+                                <option value="Sheikhupura">Sheikhupura</option>
+                                <option value="Jhang">Jhang</option>
+                                <option value="Rahim Yar Khan">Rahim Yar Khan</option>
+                                <option value="Gujrat">Gujrat</option>
+                                <option value="Kasur">Kasur</option>
+                                <option value="Sahiwal">Sahiwal</option>
+                                <option value="Okara">Okara</option>
+                                <option value="Wah Cantt">Wah Cantt</option>
+                                <option value="Dera Ghazi Khan">Dera Ghazi Khan</option>
+                                <option value="Chiniot">Chiniot</option>
+                                <option value="Kamoke">Kamoke</option>
+                                <option value="Mandi Bahauddin">Mandi Bahauddin</option>
+                                <option value="Jhelum">Jhelum</option>
+                                <option value="Sadiqabad">Sadiqabad</option>
+                                <option value="Khanewal">Khanewal</option>
+                                <option value="Hafizabad">Hafizabad</option>
+                                <option value="Muzaffargarh">Muzaffargarh</option>
+                                <option value="Khanpur">Khanpur</option>
+                                <option value="Gojra">Gojra</option>
+                                <option value="Mandi Burewala">Mandi Burewala</option>
+                                <option value="Toba Tek Singh">Toba Tek Singh</option>
+                                <option value="Muridke">Muridke</option>
+                                <option value="Khushab">Khushab</option>
+                                <option value="Pakpattan">Pakpattan</option>
+                                <option value="Jaranwala">Jaranwala</option>
+                                <option value="Chishtian">Chishtian</option>
+                                <option value="Daska">Daska</option>
+                                <option value="Mianwali">Mianwali</option>
+                                <option value="Ahmadpur East">Ahmadpur East</option>
+                                <option value="Kamalia">Kamalia</option>
+                                <option value="Vihari">Vihari</option>
+                                <option value="Wazirabad">Wazirabad</option>
+                                <option value="Layyah">Layyah</option>
+                                <option value="Chakwal">Chakwal</option>
+                                <option value="Attock">Attock</option>
+                                <option value="Kharian">Kharian</option>
+                                <option value="Narowal">Narowal</option>
+                                <option value="Lodhran">Lodhran</option>
+                                <option value="Rajanpur">Rajanpur</option>
+                                <option value="Bahawalnagar">Bahawalnagar</option>
+                                <option value="Sambrial">Sambrial</option>
+                                <option value="Pattoki">Pattoki</option>
+                                <option value="Hasilpur">Hasilpur</option>
+                                <option value="Taxila">Taxila</option>
+                              </optgroup>
+                              <optgroup label="Sindh">
+                                <option value="Karachi">Karachi</option>
+                                <option value="Hyderabad">Hyderabad</option>
+                                <option value="Sukkur">Sukkur</option>
+                                <option value="Larkana">Larkana</option>
+                                <option value="Nawabshah">Nawabshah</option>
+                                <option value="Mirpur Khas">Mirpur Khas</option>
+                                <option value="Jacobabad">Jacobabad</option>
+                                <option value="Shikarpur">Shikarpur</option>
+                                <option value="Khairpur">Khairpur</option>
+                                <option value="Dadu">Dadu</option>
+                                <option value="Umerkot">Umerkot</option>
+                                <option value="Tando Allahyar">Tando Allahyar</option>
+                                <option value="Tando Adam">Tando Adam</option>
+                                <option value="Sanghar">Sanghar</option>
+                                <option value="Badin">Badin</option>
+                                <option value="Thatta">Thatta</option>
+                                <option value="Matiari">Matiari</option>
+                                <option value="Ghotki">Ghotki</option>
+                                <option value="Kandhkot">Kandhkot</option>
+                                <option value="Kashmore">Kashmore</option>
+                                <option value="Naushahro Feroze">Naushahro Feroze</option>
+                                <option value="Shahdadpur">Shahdadpur</option>
+                                <option value="Sakrand">Sakrand</option>
+                                <option value="Kotri">Kotri</option>
+                                <option value="Jamshoro">Jamshoro</option>
+                                <option value="Sehwan">Sehwan</option>
+                                <option value="Ratodero">Ratodero</option>
+                                <option value="Kambar">Kambar</option>
+                                <option value="Shahdadkot">Shahdadkot</option>
+                                <option value="Mithi">Mithi</option>
+                              </optgroup>
+                              <optgroup label="Khyber Pakhtunkhwa">
+                                <option value="Peshawar">Peshawar</option>
+                                <option value="Mardan">Mardan</option>
+                                <option value="Abbottabad">Abbottabad</option>
+                                <option value="Mingora">Mingora</option>
+                                <option value="Kohat">Kohat</option>
+                                <option value="Dera Ismail Khan">Dera Ismail Khan</option>
+                                <option value="Swabi">Swabi</option>
+                                <option value="Mansehra">Mansehra</option>
+                                <option value="Bannu">Bannu</option>
+                                <option value="Charsadda">Charsadda</option>
+                                <option value="Nowshera">Nowshera</option>
+                                <option value="Haripur">Haripur</option>
+                                <option value="Swat">Swat</option>
+                                <option value="Karak">Karak</option>
+                                <option value="Hangu">Hangu</option>
+                                <option value="Lakki Marwat">Lakki Marwat</option>
+                                <option value="Tank">Tank</option>
+                                <option value="Timergara">Timergara</option>
+                                <option value="Chitral">Chitral</option>
+                                <option value="Batkhela">Batkhela</option>
+                                <option value="Parachinar">Parachinar</option>
+                                <option value="Alpuri">Alpuri</option>
+                                <option value="Daggar">Daggar</option>
+                                <option value="Saidu Sharif">Saidu Sharif</option>
+                                <option value="Havelian">Havelian</option>
+                              </optgroup>
+                              <optgroup label="Balochistan">
+                                <option value="Quetta">Quetta</option>
+                                <option value="Turbat">Turbat</option>
+                                <option value="Khuzdar">Khuzdar</option>
+                                <option value="Hub">Hub</option>
+                                <option value="Chaman">Chaman</option>
+                                <option value="Gwadar">Gwadar</option>
+                                <option value="Sibi">Sibi</option>
+                                <option value="Zhob">Zhob</option>
+                                <option value="Loralai">Loralai</option>
+                                <option value="Pishin">Pishin</option>
+                                <option value="Dera Murad Jamali">Dera Murad Jamali</option>
+                                <option value="Dera Allah Yar">Dera Allah Yar</option>
+                                <option value="Jaffarabad">Jaffarabad</option>
+                                <option value="Nasirabad">Nasirabad</option>
+                                <option value="Kalat">Kalat</option>
+                                <option value="Mastung">Mastung</option>
+                                <option value="Kharan">Kharan</option>
+                                <option value="Ormara">Ormara</option>
+                                <option value="Pasni">Pasni</option>
+                                <option value="Uthal">Uthal</option>
+                                <option value="Bela">Bela</option>
+                                <option value="Duki">Duki</option>
+                                <option value="Kohlu">Kohlu</option>
+                              </optgroup>
+                              <optgroup label="Islamabad Capital Territory">
+                                <option value="Islamabad">Islamabad</option>
+                              </optgroup>
+                              <optgroup label="Azad Kashmir">
+                                <option value="Muzaffarabad">Muzaffarabad</option>
+                                <option value="Mirpur">Mirpur</option>
+                                <option value="Rawalakot">Rawalakot</option>
+                                <option value="Kotli">Kotli</option>
+                                <option value="Bhimber">Bhimber</option>
+                                <option value="Bagh">Bagh</option>
+                                <option value="Palandri">Palandri</option>
+                                <option value="Dadyal">Dadyal</option>
+                                <option value="Hattian Bala">Hattian Bala</option>
+                                <option value="Athmuqam">Athmuqam</option>
+                                <option value="Hajira">Hajira</option>
+                                <option value="Forward Kahuta">Forward Kahuta</option>
+                              </optgroup>
+                              <optgroup label="Gilgit-Baltistan">
+                                <option value="Gilgit">Gilgit</option>
+                                <option value="Skardu">Skardu</option>
+                                <option value="Hunza">Hunza</option>
+                                <option value="Chilas">Chilas</option>
+                                <option value="Ghanche">Ghanche</option>
+                                <option value="Ghizer">Ghizer</option>
+                                <option value="Nagar">Nagar</option>
+                                <option value="Astore">Astore</option>
+                                <option value="Khaplu">Khaplu</option>
+                                <option value="Shigar">Shigar</option>
+                              </optgroup>
+                            </select>
                           </div>
                         </div>
 
@@ -509,15 +676,15 @@ export default function CheckoutPage() {
 
               {/* Order Summary */}
               <div className="lg:col-span-1">
-                <div className="sticky top-24 p-6 rounded-2xl border backdrop-blur-sm" style={{backgroundColor: 'transparent', borderColor: 'rgba(212, 175, 55, 0.3)'}}>
-                  <h2 className="text-2xl font-bold mb-6" style={{fontFamily: 'var(--font-family-serif)', color: 'white'}}>
+                <div className="sticky top-24 p-3 md:p-6 rounded-xl md:rounded-2xl border backdrop-blur-sm" style={{backgroundColor: 'transparent', borderColor: 'rgba(212, 175, 55, 0.3)'}}>
+                  <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6" style={{fontFamily: 'var(--font-family-serif)', color: 'white'}}>
                     Order Summary
                   </h2>
 
-                  <div className="space-y-4 mb-6">
+                  <div className="space-y-2 md:space-y-4 mb-3 md:mb-6">
                     {cart.map((item, index) => (
-                      <div key={`${item.product.id}-${index}`} className="flex gap-3">
-                        <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border" style={{backgroundColor: 'rgba(26, 26, 29, 0.8)', borderColor: 'rgba(212, 175, 55, 0.2)'}}>
+                      <div key={`${item.product.id}-${index}`} className="flex gap-2 md:gap-3">
+                        <div className="w-12 h-12 md:w-16 md:h-16 rounded-lg overflow-hidden flex-shrink-0 border" style={{backgroundColor: 'rgba(26, 26, 29, 0.8)', borderColor: 'rgba(212, 175, 55, 0.2)'}}>
                           {item.product.images?.[0] ? (
                             <img 
                               src={item.product.images[0]} 
@@ -526,16 +693,16 @@ export default function CheckoutPage() {
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-gray-400">
-                              <span className="text-2xl">📷</span>
+                              <span className="text-xl md:text-2xl">📷</span>
                             </div>
                           )}
                         </div>
                         <div className="flex-1">
-                          <h3 className="font-semibold text-sm" style={{color: 'white'}}>{item.product.name}</h3>
-                          <p className="text-xs" style={{color: 'rgba(255, 255, 255, 0.7)'}}>
+                          <h3 className="font-semibold text-xs md:text-sm" style={{color: 'white'}}>{item.product.name}</h3>
+                          <p className="text-[10px] md:text-xs" style={{color: 'rgba(255, 255, 255, 0.7)'}}>
                             {item.size} • {item.color} • Qty: {item.quantity}
                           </p>
-                          <p className="text-sm font-bold" style={{color: 'var(--color-accent)'}}>
+                          <p className="text-xs md:text-sm font-bold" style={{color: 'var(--color-accent)'}}>
                             PKR {(item.product.price * item.quantity).toLocaleString()}
                           </p>
                         </div>
@@ -544,10 +711,10 @@ export default function CheckoutPage() {
                   </div>
 
                   {/* Coupon Code Section */}
-                  <div className="mb-6 pt-6 border-t" style={{borderColor: 'rgba(212, 175, 55, 0.3)'}}>
-                    <div className="flex items-center gap-2 mb-3">
-                      <Tag size={18} style={{color: 'var(--color-accent)'}} />
-                      <span className="font-semibold" style={{color: 'white'}}>Have a Coupon?</span>
+                  <div className="mb-3 md:mb-6 pt-3 md:pt-6 border-t" style={{borderColor: 'rgba(212, 175, 55, 0.3)'}}>
+                    <div className="flex items-center gap-2 mb-2 md:mb-3">
+                      <Tag size={16} className="md:w-[18px] md:h-[18px]" style={{color: 'var(--color-accent)'}} />
+                      <span className="font-semibold text-sm md:text-base" style={{color: 'white'}}>Have a Coupon?</span>
                       {!isLoggedIn && (
                         <span className="text-xs px-2 py-1 rounded" style={{backgroundColor: 'rgba(255, 0, 127, 0.2)', color: 'var(--color-primary)'}}>
                           Login Required
@@ -644,13 +811,13 @@ export default function CheckoutPage() {
 
                   <button
                     type="submit"
-                    className="w-full px-8 py-4 rounded-full text-white font-semibold shadow-lg hover:shadow-xl transition-all"
+                    className="w-full px-6 py-3 md:px-8 md:py-4 rounded-full text-white font-semibold shadow-lg hover:shadow-xl transition-all text-sm md:text-base"
                     style={{backgroundColor: 'var(--color-primary)'}}
                   >
                     Place Order
                   </button>
 
-                  <p className="text-xs text-center mt-4" style={{color: 'rgba(255, 255, 255, 0.5)'}}>
+                  <p className="text-[10px] md:text-xs text-center mt-2 md:mt-4" style={{color: 'rgba(255, 255, 255, 0.5)'}}>
                     By placing your order, you agree to our Terms & Conditions
                   </p>
                 </div>

@@ -29,6 +29,7 @@ interface AdminLayoutProps {
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [currentTab, setCurrentTab] = useState<string | null>(null);
+  const [unreadCount, setUnreadCount] = useState(0);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -40,6 +41,27 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     }
   }, [pathname]);
 
+  useEffect(() => {
+    // Fetch unread message count
+    fetchUnreadCount();
+    // Refresh count every 30 seconds
+    const interval = setInterval(fetchUnreadCount, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const fetchUnreadCount = async () => {
+    try {
+      const response = await fetch('/api/contact');
+      const data = await response.json();
+      if (data.success) {
+        const unread = data.messages.filter((msg: any) => !msg.isRead).length;
+        setUnreadCount(unread);
+      }
+    } catch (error) {
+      console.error('Error fetching unread count:', error);
+    }
+  };
+
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin/dashboard' },
     { icon: ShoppingBag, label: 'Orders', href: '/admin/orders' },
@@ -47,12 +69,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     { icon: FolderOpen, label: 'Categories', href: '/admin/categories' },
     { icon: Users, label: 'Customers', href: '/admin/customers' },
     { icon: Tag, label: 'Coupons', href: '/admin/coupons' },
-    { icon: FileText, label: 'Banners', href: '/admin/banners' },
     { icon: Star, label: 'Reviews', href: '/admin/reviews' },
     { icon: Mail, label: 'Newsletter', href: '/admin/newsletter' },
     { icon: FileText, label: 'Messages', href: '/admin/messages' },
     { icon: BarChart3, label: 'Analytics', href: '/admin/analytics' },
-    { icon: FileText, label: 'Hero Section', href: '/admin/hero' },
   ];
 
   const settingsItems = [
@@ -65,7 +85,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   const handleLogout = () => {
     localStorage.removeItem('admin_token');
-    router.push('/admin/login');
+    window.location.href = '/admin/login';
   };
 
   return (
@@ -106,11 +126,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <div className="space-y-1">
               {menuItems.map((item) => {
                 const isActive = pathname === item.href;
+                const isMessages = item.label === 'Messages';
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all relative ${
                       isActive ? 'shadow-lg' : 'hover:bg-white/5'
                     }`}
                     style={{
@@ -120,6 +141,18 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                   >
                     <item.icon size={20} />
                     {sidebarOpen && <span className="font-medium">{item.label}</span>}
+                    {isMessages && unreadCount > 0 && (
+                      <span 
+                        className="absolute top-2 right-2 flex items-center justify-center min-w-[20px] h-5 px-1.5 text-xs font-bold rounded-full"
+                        style={{
+                          backgroundColor: '#ef4444',
+                          color: 'white',
+                          fontSize: '11px'
+                        }}
+                      >
+                        {unreadCount > 99 ? '99+' : unreadCount}
+                      </span>
+                    )}
                   </Link>
                 );
               })}

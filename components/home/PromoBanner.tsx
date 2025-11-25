@@ -91,7 +91,7 @@ export default function PromoBanner() {
     setTimeout(() => setCopied(false), 2000);
   };
   return (
-    <section className="py-6 md:py-8 lg:py-10 relative overflow-hidden">
+    <section className="py-4 md:py-6 lg:py-8 relative overflow-hidden" style={{margin: 0}}>
       {/* Animated gradient background */}
       <div className="absolute inset-0" style={{
         background: 'linear-gradient(135deg, rgba(255, 0, 127, 0.15) 0%, rgba(212, 175, 55, 0.15) 100%)',

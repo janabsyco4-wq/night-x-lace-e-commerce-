@@ -1,3 +1,7 @@
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Hero from "@/components/home/Hero";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import Testimonials from "@/components/home/Testimonials";
@@ -7,6 +11,17 @@ import { Shield, Truck, RotateCcw, Headphones, Sparkles, Heart, TrendingUp } fro
 import Link from 'next/link';
 
 export default function Home() {
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check if user is logged in or in guest mode
+    const token = localStorage.getItem('user_token');
+    const guestMode = localStorage.getItem('guest_mode');
+    
+    if (!token && !guestMode) {
+      router.push('/login');
+    }
+  }, [router]);
   return (
     <>
       <Hero />
@@ -14,7 +29,7 @@ export default function Home() {
       <SmallBanners />
       
       {/* Trust Badges */}
-      <section className="py-8 md:py-12 lg:py-16 relative overflow-hidden">
+      <section className="hidden md:block py-8 md:py-12 lg:py-16 relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute top-1/2 left-1/4 w-64 h-64 rounded-full blur-3xl" style={{backgroundColor: 'var(--color-primary)'}}></div>
@@ -72,7 +87,7 @@ export default function Home() {
       </section>
 
       {/* Categories Showcase */}
-      <section className="py-12 md:py-16 lg:py-20">
+      <section className="hidden md:block py-12 md:py-16 lg:py-20">
         <div className="container-custom">
           <div className="text-center mb-10 md:mb-14">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" style={{fontFamily: 'var(--font-family-serif)', color: 'white'}}>
@@ -124,49 +139,9 @@ export default function Home() {
 
       <FeaturedProducts />
 
-      {/* Newsletter Section */}
-      <section className="py-16 md:py-20 lg:py-24 relative overflow-hidden">
-        <div className="absolute inset-0" style={{background: 'linear-gradient(135deg, rgba(255, 0, 127, 0.1) 0%, rgba(212, 175, 55, 0.1) 100%)'}}></div>
-        
-        <div className="container-custom relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full shadow-md border mb-6" style={{backgroundColor: 'rgba(212, 175, 55, 0.1)', borderColor: 'var(--color-accent)'}}>
-              <Heart size={16} style={{color: 'var(--color-accent)'}} />
-              <span className="text-sm font-medium" style={{color: 'var(--color-accent)'}}>Join Our Community</span>
-            </div>
-
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6" style={{fontFamily: 'var(--font-family-serif)', color: 'white'}}>
-              Get Exclusive Offers
-            </h2>
-            <p className="text-base md:text-lg mb-8 md:mb-10 max-w-2xl mx-auto" style={{color: 'rgba(255, 255, 255, 0.7)'}}>
-              Subscribe to our newsletter and be the first to know about new arrivals, special promotions, and styling tips
-            </p>
-
-            <form className="flex flex-col sm:flex-row gap-3 md:gap-4 max-w-xl mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="flex-1 px-6 py-4 rounded-full border-2 focus:outline-none transition-all text-base"
-                style={{backgroundColor: 'rgba(26, 26, 29, 0.8)', borderColor: 'rgba(212, 175, 55, 0.3)', color: 'white'}}
-                required
-              />
-              <button
-                type="submit"
-                className="px-8 py-4 rounded-full font-bold text-base transition-all hover:shadow-xl hover:scale-105 whitespace-nowrap"
-                style={{backgroundColor: 'var(--color-primary)', color: 'white'}}
-              >
-                Subscribe Now
-              </button>
-            </form>
-
-            <p className="text-xs md:text-sm mt-4" style={{color: 'rgba(255, 255, 255, 0.5)'}}>
-              We respect your privacy. Unsubscribe at any time.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <Testimonials />
+      <div className="hidden md:block">
+        <Testimonials />
+      </div>
     </>
   );
 }

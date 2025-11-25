@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Lock, Mail, User, Phone, Eye, EyeOff, ShoppingBag, Heart, Star, Check } from 'lucide-react';
+import { Eye, EyeOff, ShoppingBag, Heart, Star, Check } from 'lucide-react';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -15,8 +15,22 @@ export default function RegisterPage() {
     confirmPassword: '',
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  
+  // Live validation
+  const passwordsMatch = formData.password && formData.confirmPassword && formData.password === formData.confirmPassword;
+  const passwordsDontMatch = formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword;
+  const passwordTooShort = formData.password && formData.password.length < 6;
+
+  // Redirect if already logged in
+  useEffect(() => {
+    const token = localStorage.getItem('user_token');
+    if (token) {
+      router.push('/dashboard');
+    }
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +66,7 @@ export default function RegisterPage() {
         localStorage.setItem('user_token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
         window.dispatchEvent(new Event('userLoggedIn'));
-        router.push('/dashboard');
+        window.location.href = '/dashboard';
       } else {
         setError(data.message || 'Registration failed');
       }
@@ -167,17 +181,12 @@ export default function RegisterPage() {
                 Full Name
               </label>
               <div className="relative">
-                <User 
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2" 
-                  size={20} 
-                  style={{color: 'rgba(255, 255, 255, 0.4)'}} 
-                />
                 <input
                   type="text"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-xl border-2 focus:outline-none transition-all"
+                  className="w-full pl-4 pr-4 py-3.5 rounded-xl border-2 focus:outline-none transition-all"
                   style={{
                     backgroundColor: 'rgba(26, 26, 29, 0.8)', 
                     borderColor: 'rgba(212, 175, 55, 0.2)', 
@@ -196,17 +205,12 @@ export default function RegisterPage() {
                 Email Address
               </label>
               <div className="relative">
-                <Mail 
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2" 
-                  size={20} 
-                  style={{color: 'rgba(255, 255, 255, 0.4)'}} 
-                />
                 <input
                   type="email"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-xl border-2 focus:outline-none transition-all"
+                  className="w-full pl-4 pr-4 py-3.5 rounded-xl border-2 focus:outline-none transition-all"
                   style={{
                     backgroundColor: 'rgba(26, 26, 29, 0.8)', 
                     borderColor: 'rgba(212, 175, 55, 0.2)', 
@@ -225,17 +229,12 @@ export default function RegisterPage() {
                 Phone Number
               </label>
               <div className="relative">
-                <Phone 
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2" 
-                  size={20} 
-                  style={{color: 'rgba(255, 255, 255, 0.4)'}} 
-                />
                 <input
                   type="tel"
                   required
                   value={formData.phone}
                   onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-xl border-2 focus:outline-none transition-all"
+                  className="w-full pl-4 pr-4 py-3.5 rounded-xl border-2 focus:outline-none transition-all"
                   style={{
                     backgroundColor: 'rgba(26, 26, 29, 0.8)', 
                     borderColor: 'rgba(212, 175, 55, 0.2)', 
@@ -254,25 +253,20 @@ export default function RegisterPage() {
                 Password
               </label>
               <div className="relative">
-                <Lock 
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2" 
-                  size={20} 
-                  style={{color: 'rgba(255, 255, 255, 0.4)'}} 
-                />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
                   value={formData.password}
                   onChange={(e) => setFormData({...formData, password: e.target.value})}
-                  className="w-full pl-12 pr-14 py-3.5 rounded-xl border-2 focus:outline-none transition-all"
+                  className="w-full pl-4 pr-14 py-3.5 rounded-xl border-2 focus:outline-none transition-all"
                   style={{
                     backgroundColor: 'rgba(26, 26, 29, 0.8)', 
-                    borderColor: 'rgba(212, 175, 55, 0.2)', 
+                    borderColor: passwordTooShort ? 'rgba(255, 0, 0, 0.5)' : 'rgba(212, 175, 55, 0.2)', 
                     color: 'white'
                   }}
                   placeholder="••••••••"
                   onFocus={(e) => e.target.style.borderColor = 'var(--color-primary)'}
-                  onBlur={(e) => e.target.style.borderColor = 'rgba(212, 175, 55, 0.2)'}
+                  onBlur={(e) => e.target.style.borderColor = passwordTooShort ? 'rgba(255, 0, 0, 0.5)' : 'rgba(212, 175, 55, 0.2)'}
                 />
                 <button
                   type="button"
@@ -283,6 +277,9 @@ export default function RegisterPage() {
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
+              {passwordTooShort && (
+                <p className="text-xs mt-1 text-red-400">Password must be at least 6 characters</p>
+              )}
             </div>
 
             {/* Confirm Password */}
@@ -291,27 +288,36 @@ export default function RegisterPage() {
                 Confirm Password
               </label>
               <div className="relative">
-                <Lock 
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2" 
-                  size={20} 
-                  style={{color: 'rgba(255, 255, 255, 0.4)'}} 
-                />
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showConfirmPassword ? 'text' : 'password'}
                   required
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-xl border-2 focus:outline-none transition-all"
+                  className="w-full pl-4 pr-14 py-3.5 rounded-xl border-2 focus:outline-none transition-all"
                   style={{
                     backgroundColor: 'rgba(26, 26, 29, 0.8)', 
-                    borderColor: 'rgba(212, 175, 55, 0.2)', 
+                    borderColor: passwordsDontMatch ? 'rgba(255, 0, 0, 0.5)' : passwordsMatch ? 'rgba(0, 255, 0, 0.5)' : 'rgba(212, 175, 55, 0.2)', 
                     color: 'white'
                   }}
                   placeholder="••••••••"
                   onFocus={(e) => e.target.style.borderColor = 'var(--color-primary)'}
-                  onBlur={(e) => e.target.style.borderColor = 'rgba(212, 175, 55, 0.2)'}
+                  onBlur={(e) => e.target.style.borderColor = passwordsDontMatch ? 'rgba(255, 0, 0, 0.5)' : passwordsMatch ? 'rgba(0, 255, 0, 0.5)' : 'rgba(212, 175, 55, 0.2)'}
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 hover:scale-110 transition-transform"
+                  style={{color: 'rgba(255, 255, 255, 0.4)'}}
+                >
+                  {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
               </div>
+              {passwordsDontMatch && (
+                <p className="text-xs mt-1 text-red-400">Passwords do not match</p>
+              )}
+              {passwordsMatch && (
+                <p className="text-xs mt-1 text-green-400">Passwords match ✓</p>
+              )}
             </div>
 
             {/* Submit Button */}
@@ -353,13 +359,16 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            <Link 
-              href="/" 
-              className="block text-sm font-medium hover:underline transition-colors" 
+            <button
+              onClick={() => {
+                localStorage.setItem('guest_mode', 'true');
+                router.push('/');
+              }}
+              className="block w-full text-sm font-medium hover:underline transition-colors" 
               style={{color: 'rgba(255, 255, 255, 0.6)'}}
             >
               Continue Shopping as Guest →
-            </Link>
+            </button>
           </div>
         </div>
       </div>

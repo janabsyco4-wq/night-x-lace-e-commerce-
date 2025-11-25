@@ -58,12 +58,12 @@ export default function CategoriesPage() {
           </div>
           
           {/* Title */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 animate-fade-in-up" style={{fontFamily: 'var(--font-family-serif)', color: 'white'}}>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold mb-3 md:mb-4 animate-fade-in-up" style={{fontFamily: 'var(--font-family-serif)', color: 'white'}}>
             Shop by Category
           </h1>
           
           {/* Subtitle */}
-          <p className="text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto mb-8 animate-fade-in-up delay-200" style={{color: 'rgba(255, 255, 255, 0.7)'}}>
+          <p className="text-sm md:text-base lg:text-lg max-w-3xl mx-auto mb-6 animate-fade-in-up delay-200" style={{color: 'rgba(255, 255, 255, 0.7)'}}>
             Discover our curated collection of premium intimate wear designed for comfort and elegance
           </p>
 
@@ -87,7 +87,7 @@ export default function CategoriesPage() {
       {/* Categories Grid */}
       <div className="pb-16 md:pb-24">
         <div className="container-custom px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
             {categories.map((category, index) => (
               <Link 
                 key={category._id}
@@ -97,38 +97,24 @@ export default function CategoriesPage() {
                   animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
                 }}
               >
-                <div className="relative h-full rounded-2xl border-2 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 overflow-hidden" style={{backgroundColor: 'rgba(26, 26, 29, 0.8)', borderColor: 'rgba(212, 175, 55, 0.3)'}}>
+                <div className="relative aspect-square rounded-xl border backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden" style={{backgroundColor: 'rgba(26, 26, 29, 0.8)', borderColor: 'rgba(212, 175, 55, 0.3)'}}>
                   {/* Gradient Overlay on Hover */}
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{background: 'linear-gradient(135deg, rgba(255, 0, 127, 0.1) 0%, rgba(212, 175, 55, 0.1) 100%)'}}></div>
                   
                   {/* Content */}
-                  <div className="relative p-8 flex flex-col items-center text-center h-full">
+                  <div className="relative p-3 md:p-4 flex flex-col items-center justify-center text-center h-full">
                     {/* Icon/Emoji */}
-                    <div className="w-24 h-24 md:w-28 md:h-28 rounded-full flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" style={{backgroundColor: 'rgba(212, 175, 55, 0.15)'}}>
-                      <span className="text-5xl md:text-6xl">
+                    <div className="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mb-2 md:mb-3 transition-transform duration-300 group-hover:scale-110" style={{backgroundColor: 'rgba(212, 175, 55, 0.15)'}}>
+                      <span className="text-2xl md:text-3xl">
                         {category.icon || DEFAULT_EMOJI}
                       </span>
                     </div>
                     
                     {/* Category Name */}
-                    <h2 className="text-2xl md:text-3xl font-bold mb-3 transition-colors group-hover:text-pink-400" style={{fontFamily: 'var(--font-family-serif)', color: 'white'}}>
+                    <h2 className="text-xs md:text-sm font-bold transition-colors group-hover:text-pink-400 line-clamp-2" style={{fontFamily: 'var(--font-family-serif)', color: 'white'}}>
                       {category.name}
                     </h2>
-                    
-                    {/* Description */}
-                    <p className="text-sm md:text-base mb-6 line-clamp-2 flex-grow" style={{color: 'rgba(255, 255, 255, 0.7)'}}>
-                      {category.description || 'Explore our collection'}
-                    </p>
-                    
-                    {/* CTA */}
-                    <div className="inline-flex items-center gap-2 text-base font-bold group-hover:gap-4 transition-all" style={{color: 'var(--color-primary)'}}>
-                      <span>Shop Now</span>
-                      <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                    </div>
                   </div>
-
-                  {/* Corner Accent */}
-                  <div className="absolute top-0 right-0 w-20 h-20 opacity-20 group-hover:opacity-40 transition-opacity" style={{background: 'radial-gradient(circle at top right, var(--color-primary) 0%, transparent 70%)'}}></div>
                 </div>
               </Link>
             ))}

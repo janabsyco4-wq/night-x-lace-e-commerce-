@@ -33,6 +33,43 @@ export async function GET(
   }
 }
 
+export async function PATCH(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  try {
+    await connectDB();
+
+    const { id } = await context.params;
+    const body = await request.json();
+
+    const contact = await Contact.findByIdAndUpdate(
+      id,
+      { isRead: body.isRead },
+      { new: true }
+    );
+
+    if (!contact) {
+      return NextResponse.json(
+        { success: false, message: 'Message not found' },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: 'Message updated successfully',
+      contact,
+    });
+  } catch (error) {
+    console.error('Update contact error:', error);
+    return NextResponse.json(
+      { success: false, message: 'Failed to update message' },
+      { status: 500 }
+    );
+  }
+}
+
 export async function DELETE(
   request: NextRequest,
   context: { params: Promise<{ id: string }> }

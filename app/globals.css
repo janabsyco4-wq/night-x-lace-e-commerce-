@@ -149,42 +149,40 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Simple vertical scrollbar with longer thumb */
-::-webkit-scrollbar {
-  width: 12px;
-}
-
-::-webkit-scrollbar-track {
-  background: #1a1a1d;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #FF007F;
-  border-radius: 6px;
-  min-height: 80px;
-  border: 2px solid #1a1a1d;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #E6006F;
-  box-shadow: 0 0 8px rgba(255, 0, 127, 0.4);
-}
-
-/* Hide scrollbar for other elements */
-div:not(aside)::-webkit-scrollbar,
-section::-webkit-scrollbar {
+/* Hide scrollbar for all elements except body */
+*:not(body)::-webkit-scrollbar {
   display: none;
 }
 
-/* Prevent scroll on nested elements */
-* {
+*:not(body) {
   scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-body, aside {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-primary) #1a1a1d;
+/* Custom scrollbar for main page scroll (body) */
+body::-webkit-scrollbar {
+  width: 10px;
 }
+
+body::-webkit-scrollbar-track {
+  background: rgba(26, 26, 29, 0.5);
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-dark);
+}
+
+body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) rgba(26, 26, 29, 0.5);
+}
+
+
 
 /* Spin reverse animation for loading spinner */
 @keyframes spin-reverse {
@@ -237,12 +235,4 @@ select option:hover {
   }
 }
 
-/* Hide scrollbar for carousel */
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}

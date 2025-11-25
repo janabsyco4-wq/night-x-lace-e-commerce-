@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:api": "node scripts/test-api-endpoints.js",
+    "seed:products": "node scripts/seed-products.js",
+    "add:categories": "node scripts/add-missing-categories.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

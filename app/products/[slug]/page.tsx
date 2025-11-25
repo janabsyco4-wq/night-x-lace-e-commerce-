@@ -216,27 +216,79 @@ export default function ProductDetailPage() {
             <div>
               <label className="block font-semibold mb-2 md:mb-3 text-sm md:text-base" style={{color: 'white'}}>Select Color</label>
               <div className="flex flex-wrap gap-3">
-                {product.colors.map((color: string) => (
-                  <button
-                    key={`color-${color}`}
-                    onClick={() => setSelectedColor(color)}
-                    className="w-11 h-11 md:w-12 md:h-12 rounded-full border-2 transition-all"
-                    style={{
-                      backgroundColor: color.toLowerCase() === 'black' ? '#1A1A1D' : 
-                                     color.toLowerCase() === 'white' ? '#fff' :
-                                     color.toLowerCase() === 'red' ? '#FF007F' :
-                                     color.toLowerCase() === 'nude' ? '#E8C4A0' :
-                                     color.toLowerCase() === 'pink' ? '#FF007F' :
-                                     color.toLowerCase() === 'blue' ? '#4169E1' :
-                                     color.toLowerCase() === 'grey' || color.toLowerCase() === 'gray' ? '#808080' :
-                                     '#ccc',
-                      borderColor: selectedColor === color ? 'var(--color-accent)' : 'rgba(255, 255, 255, 0.2)',
-                      borderWidth: selectedColor === color ? '3px' : '2px'
-                    }}
-                    title={color}
-                  />
-                ))}
+                {product.colors.map((color: string) => {
+                  // Helper function to get color value
+                  const getColorValue = (colorName: string) => {
+                    // If it's already a hex code, return it
+                    if (colorName.startsWith('#')) {
+                      return colorName;
+                    }
+                    
+                    // Predefined color mappings
+                    const colorMap: { [key: string]: string } = {
+                      'black': '#1A1A1D',
+                      'white': '#FFFFFF',
+                      'red': '#FF0000',
+                      'nude': '#E8C4A0',
+                      'pink': '#FF007F',
+                      'blue': '#4169E1',
+                      'grey': '#808080',
+                      'gray': '#808080',
+                      'purple': '#800080',
+                      'green': '#008000',
+                      'yellow': '#FFD700',
+                      'beige': '#F5F5DC',
+                      'navy': '#000080',
+                      'burgundy': '#800020',
+                      'maroon': '#800000',
+                      'teal': '#008080',
+                      'olive': '#808000',
+                      'brown': '#A52A2A',
+                      'orange': '#FFA500',
+                      'coral': '#FF7F50',
+                      'lavender': '#E6E6FA',
+                      'mint': '#98FF98',
+                      'peach': '#FFE5B4',
+                      'cream': '#FFFDD0',
+                      'ivory': '#FFFFF0',
+                      'silver': '#C0C0C0',
+                      'gold': '#FFD700',
+                    };
+                    
+                    return colorMap[colorName.toLowerCase()] || '#CCCCCC';
+                  };
+
+                  const colorValue = getColorValue(color);
+                  const isLightColor = ['white', 'cream', 'ivory', 'beige'].includes(color.toLowerCase()) || 
+                                       (colorValue.startsWith('#') && parseInt(colorValue.slice(1), 16) > 0xCCCCCC);
+
+                  return (
+                    <button
+                      key={`color-${color}`}
+                      onClick={() => setSelectedColor(color)}
+                      className="relative rounded-full border-2 transition-all flex items-center justify-center"
+                      style={{
+                        width: color.startsWith('#') ? '48px' : '48px',
+                        height: color.startsWith('#') ? '48px' : '48px',
+                        backgroundColor: colorValue,
+                        borderColor: selectedColor === color ? 'var(--color-accent)' : isLightColor ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.2)',
+                        borderWidth: selectedColor === color ? '3px' : '2px',
+                        boxShadow: selectedColor === color ? '0 0 0 2px rgba(212, 175, 55, 0.3)' : 'none'
+                      }}
+                      title={color}
+                    >
+                      {selectedColor === color && (
+                        <span className="text-xl" style={{color: isLightColor ? '#000' : '#fff'}}>✓</span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
+              {selectedColor && (
+                <p className="text-sm mt-2" style={{color: 'rgba(255, 255, 255, 0.7)'}}>
+                  Selected: <span style={{color: 'var(--color-accent)'}}>{selectedColor}</span>
+                </p>
+              )}
             </div>
 
             {/* Quantity */}

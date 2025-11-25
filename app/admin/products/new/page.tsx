@@ -37,6 +37,8 @@ export default function NewProductPage() {
 
   const availableSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '32A', '32B', '34A', '34B', '34C', '36B', '36C', '38C', '40C'];
   const availableColors = ['Black', 'White', 'Red', 'Pink', 'Nude', 'Blue', 'Grey'];
+  const [customColor, setCustomColor] = useState('');
+  const [customSize, setCustomSize] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('admin_token');
@@ -151,12 +153,46 @@ export default function NewProductPage() {
     });
   };
 
+  const addCustomSize = () => {
+    if (customSize.trim() && !formData.sizes.includes(customSize.trim())) {
+      setFormData({
+        ...formData,
+        sizes: [...formData.sizes, customSize.trim()],
+      });
+      setCustomSize('');
+    }
+  };
+
+  const removeSize = (size: string) => {
+    setFormData({
+      ...formData,
+      sizes: formData.sizes.filter(s => s !== size),
+    });
+  };
+
   const toggleColor = (color: string) => {
     setFormData({
       ...formData,
       colors: formData.colors.includes(color)
         ? formData.colors.filter(c => c !== color)
         : [...formData.colors, color],
+    });
+  };
+
+  const addCustomColor = () => {
+    if (customColor.trim() && !formData.colors.includes(customColor.trim())) {
+      setFormData({
+        ...formData,
+        colors: [...formData.colors, customColor.trim()],
+      });
+      setCustomColor('');
+    }
+  };
+
+  const removeColor = (color: string) => {
+    setFormData({
+      ...formData,
+      colors: formData.colors.filter(c => c !== color),
     });
   };
 
@@ -373,7 +409,9 @@ export default function NewProductPage() {
           {/* Sizes */}
           <div className="p-6 rounded-xl border" style={{backgroundColor: '#1a1a1d', borderColor: 'rgba(212, 175, 55, 0.1)'}}>
             <h2 className="text-xl font-semibold mb-4" style={{color: 'white'}}>Available Sizes</h2>
-            <div className="flex flex-wrap gap-2">
+            
+            {/* Preset Sizes */}
+            <div className="flex flex-wrap gap-2 mb-4">
               {availableSizes.map(size => (
                 <button
                   key={size}
@@ -392,12 +430,70 @@ export default function NewProductPage() {
                 </button>
               ))}
             </div>
+
+            {/* Custom Size Input */}
+            <div className="border-t pt-4" style={{borderColor: 'rgba(212, 175, 55, 0.1)'}}>
+              <label className="block text-sm font-medium mb-2" style={{color: 'white'}}>
+                Add Custom Size
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={customSize}
+                  onChange={(e) => setCustomSize(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addCustomSize())}
+                  className="flex-1 px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 transition-all"
+                  style={{backgroundColor: 'rgba(255, 255, 255, 0.05)', borderColor: 'rgba(212, 175, 55, 0.1)', color: 'white'}}
+                  placeholder="e.g., 38D, 40DD, Free Size"
+                />
+                <button
+                  type="button"
+                  onClick={addCustomSize}
+                  className="px-6 py-2 rounded-lg transition-all"
+                  style={{backgroundColor: 'var(--color-primary)', color: 'white'}}
+                >
+                  Add
+                </button>
+              </div>
+              <p className="text-xs mt-1" style={{color: 'rgba(255, 255, 255, 0.5)'}}>
+                Enter any custom size (e.g., 38D, 40DD, One Size)
+              </p>
+            </div>
+
+            {/* Selected Sizes */}
+            {formData.sizes.length > 0 && (
+              <div className="border-t pt-4 mt-4" style={{borderColor: 'rgba(212, 175, 55, 0.1)'}}>
+                <label className="block text-sm font-medium mb-2" style={{color: 'white'}}>
+                  Selected Sizes ({formData.sizes.length})
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {formData.sizes.map(size => (
+                    <div
+                      key={size}
+                      className="flex items-center gap-2 px-3 py-2 rounded-lg border"
+                      style={{backgroundColor: 'rgba(255, 0, 127, 0.2)', borderColor: 'var(--color-primary)', color: 'white'}}
+                    >
+                      <span>{size}</span>
+                      <button
+                        type="button"
+                        onClick={() => removeSize(size)}
+                        className="hover:text-red-400 transition-colors"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Colors */}
           <div className="p-6 rounded-xl border" style={{backgroundColor: '#1a1a1d', borderColor: 'rgba(212, 175, 55, 0.1)'}}>
             <h2 className="text-xl font-semibold mb-4" style={{color: 'white'}}>Available Colors</h2>
-            <div className="flex flex-wrap gap-2">
+            
+            {/* Preset Colors */}
+            <div className="flex flex-wrap gap-2 mb-4">
               {availableColors.map(color => (
                 <button
                   key={color}
@@ -416,6 +512,62 @@ export default function NewProductPage() {
                 </button>
               ))}
             </div>
+
+            {/* Custom Color Input */}
+            <div className="border-t pt-4" style={{borderColor: 'rgba(212, 175, 55, 0.1)'}}>
+              <label className="block text-sm font-medium mb-2" style={{color: 'white'}}>
+                Add Custom Color
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={customColor}
+                  onChange={(e) => setCustomColor(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addCustomColor())}
+                  className="flex-1 px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 transition-all"
+                  style={{backgroundColor: 'rgba(255, 255, 255, 0.05)', borderColor: 'rgba(212, 175, 55, 0.1)', color: 'white'}}
+                  placeholder="e.g., Navy Blue, #FF5733, Burgundy"
+                />
+                <button
+                  type="button"
+                  onClick={addCustomColor}
+                  className="px-6 py-2 rounded-lg transition-all"
+                  style={{backgroundColor: 'var(--color-accent)', color: '#0f0f11'}}
+                >
+                  Add
+                </button>
+              </div>
+              <p className="text-xs mt-1" style={{color: 'rgba(255, 255, 255, 0.5)'}}>
+                Enter color name or hex code (e.g., #7283872)
+              </p>
+            </div>
+
+            {/* Selected Colors */}
+            {formData.colors.length > 0 && (
+              <div className="border-t pt-4 mt-4" style={{borderColor: 'rgba(212, 175, 55, 0.1)'}}>
+                <label className="block text-sm font-medium mb-2" style={{color: 'white'}}>
+                  Selected Colors ({formData.colors.length})
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {formData.colors.map(color => (
+                    <div
+                      key={color}
+                      className="flex items-center gap-2 px-3 py-2 rounded-lg border"
+                      style={{backgroundColor: 'rgba(212, 175, 55, 0.2)', borderColor: 'var(--color-accent)', color: 'white'}}
+                    >
+                      <span>{color}</span>
+                      <button
+                        type="button"
+                        onClick={() => removeColor(color)}
+                        className="hover:text-red-400 transition-colors"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Product Variants */}

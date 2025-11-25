@@ -88,9 +88,48 @@ export default function SmallBanners() {
   };
 
   return (
-    <section className="py-8 md:py-12">
+    <section className="py-4 md:py-12">
       <div className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        {/* Mobile View - Single Line */}
+        <div className="md:hidden flex flex-col gap-2">
+          {coupons.map((coupon, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-between px-3 py-2 rounded-lg border backdrop-blur-sm"
+              style={{
+                backgroundColor: 'rgba(26, 26, 29, 0.8)',
+                borderColor: coupon.color,
+              }}
+            >
+              <div className="flex items-center gap-2 flex-1 min-w-0">
+                <span className="text-xs font-semibold whitespace-nowrap" style={{ color: 'white' }}>
+                  {coupon.description}
+                </span>
+                <span className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>-</span>
+                <span className="text-xs font-mono font-bold whitespace-nowrap" style={{ color: coupon.textColor }}>
+                  {coupon.code}
+                </span>
+              </div>
+              <button
+                onClick={() => copyToClipboard(coupon.code)}
+                className="p-1.5 rounded transition-all flex-shrink-0"
+                style={{
+                  backgroundColor: coupon.bgColor,
+                  color: coupon.textColor,
+                }}
+              >
+                {copiedCode === coupon.code ? (
+                  <Check size={14} />
+                ) : (
+                  <Copy size={14} />
+                )}
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop View - Original Cards */}
+        <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {coupons.map((coupon, index) => (
             <div
               key={index}

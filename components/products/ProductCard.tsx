@@ -25,8 +25,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <div className="group rounded-xl md:rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 md:hover:-translate-y-2 border backdrop-blur-sm" style={{backgroundColor: 'transparent', borderColor: 'rgba(212, 175, 55, 0.3)'}}>
-      <Link href={`/products/${product.slug}`}>
+    <Link href={`/products/${product.slug}`} className="block group rounded-xl md:rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 md:hover:-translate-y-2 border backdrop-blur-sm" style={{backgroundColor: 'transparent', borderColor: 'rgba(212, 175, 55, 0.3)'}}>
         <div className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
           {(product as any).images && (product as any).images[0] ? (
             <img 
@@ -71,21 +70,12 @@ export default function ProductCard({ product }: ProductCardProps) {
             />
           </button>
 
-          {/* Quick View - Hidden on mobile */}
-          <div className="absolute bottom-2 md:bottom-3 left-2 md:left-3 right-2 md:right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 hidden md:block">
-            <button className="w-full py-2 rounded-full text-sm font-semibold transition-colors shadow-lg" style={{backgroundColor: 'var(--color-primary)', color: 'white'}}>
-              Quick View
-            </button>
-          </div>
         </div>
-      </Link>
 
       <div className="p-2 sm:p-3 md:p-5">
-        <Link href={`/products/${product.slug}`}>
           <h3 className="font-semibold text-xs sm:text-sm md:text-base mb-1 md:mb-2 transition-colors line-clamp-2" style={{color: 'white'}}>
             {product.name}
           </h3>
-        </Link>
         
         <div className="flex items-center gap-1 md:gap-2 mb-1 sm:mb-2 md:mb-3">
           <div className="flex items-center gap-0.5 md:gap-1">
@@ -107,6 +97,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           <span className="text-[9px] sm:text-[10px] md:text-sm ml-0.5 md:ml-1" style={{color: 'rgba(255, 255, 255, 0.5)'}}>PKR</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

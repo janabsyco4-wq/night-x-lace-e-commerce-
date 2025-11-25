@@ -307,37 +307,37 @@ export default function AdminOrdersPage() {
       {selectedOrder && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-2 md:p-4">
           <div className="bg-gray-800 rounded-lg max-w-3xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto">
-            <div className="p-4 md:p-6 border-b border-gray-700 sticky top-0 bg-gray-800 z-10">
-              <div className="flex items-center gap-3 mb-3">
+            <div className="p-3 md:p-6 border-b border-gray-700 sticky top-0 bg-gray-800 z-10">
+              <div className="flex items-center gap-2 mb-2 md:mb-3">
                 <button
                   onClick={() => setSelectedOrder(null)}
-                  className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+                  className="flex items-center gap-1 md:gap-2 text-gray-400 hover:text-white transition-colors"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
-                  <span className="text-sm md:text-base">Back</span>
+                  <span className="text-xs md:text-base">Back</span>
                 </button>
               </div>
               <div className="flex justify-between items-start">
                 <div>
-                  <h2 className="text-xl md:text-2xl font-bold text-white">Order Details</h2>
-                  <p className="text-sm md:text-base text-gray-400 mt-1">Order #{selectedOrder.orderNumber}</p>
+                  <h2 className="text-lg md:text-2xl font-bold text-white">Order Details</h2>
+                  <p className="text-xs md:text-base text-gray-400 mt-0.5 md:mt-1">Order #{selectedOrder.orderNumber}</p>
                 </div>
                 <button
                   onClick={() => setSelectedOrder(null)}
-                  className="text-gray-400 hover:text-white text-xl md:text-2xl"
+                  className="text-gray-400 hover:text-white text-lg md:text-2xl"
                 >
                   ✕
                 </button>
               </div>
             </div>
 
-            <div className="p-4 md:p-6 space-y-4 md:space-y-6">
+            <div className="p-3 md:p-6 space-y-3 md:space-y-6">
               {/* Customer Info */}
               <div>
-                <h3 className="text-base md:text-lg font-semibold text-white mb-2 md:mb-3">Customer Information</h3>
-                <div className="bg-gray-900 p-3 md:p-4 rounded-lg space-y-2 text-sm md:text-base">
+                <h3 className="text-sm md:text-lg font-semibold text-white mb-1.5 md:mb-3">Customer Information</h3>
+                <div className="bg-gray-900 p-2 md:p-4 rounded-lg space-y-1 md:space-y-2 text-xs md:text-base">
                   <p className="text-gray-300"><span className="text-gray-400">Name:</span> {selectedOrder.customer.name}</p>
                   <p className="text-gray-300 break-all"><span className="text-gray-400">Email:</span> {selectedOrder.customer.email}</p>
                   <p className="text-gray-300"><span className="text-gray-400">Phone:</span> {selectedOrder.customer.phone}</p>
@@ -347,20 +347,20 @@ export default function AdminOrdersPage() {
 
               {/* Order Items */}
               <div>
-                <h3 className="text-base md:text-lg font-semibold text-white mb-2 md:mb-3">Order Items</h3>
+                <h3 className="text-sm md:text-lg font-semibold text-white mb-1.5 md:mb-3">Order Items</h3>
                 <div className="space-y-2 md:space-y-3">
                   {selectedOrder.items.map((item, index) => (
-                    <div key={index} className="bg-gray-900 p-3 md:p-4 rounded-lg flex gap-3 md:gap-4">
+                    <div key={index} className="bg-gray-900 p-2 md:p-4 rounded-lg flex gap-2 md:gap-4">
                       {item.image && (
-                        <img src={item.image} alt={item.name} className="w-16 h-16 md:w-20 md:h-20 object-cover rounded flex-shrink-0" />
+                        <img src={item.image} alt={item.name} className="w-12 h-12 md:w-20 md:h-20 object-cover rounded flex-shrink-0" />
                       )}
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-sm md:text-base text-white font-medium truncate">{item.name}</h4>
-                        <p className="text-xs md:text-sm text-gray-400">Size: {item.size || 'N/A'} | Color: {item.color || 'N/A'}</p>
-                        <p className="text-xs md:text-sm text-gray-400">Quantity: {item.quantity}</p>
+                        <h4 className="text-xs md:text-base text-white font-medium truncate">{item.name}</h4>
+                        <p className="text-[10px] md:text-sm text-gray-400">Size: {item.size || 'N/A'} | Color: {item.color || 'N/A'}</p>
+                        <p className="text-[10px] md:text-sm text-gray-400">Quantity: {item.quantity}</p>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <p className="text-sm md:text-base text-white font-semibold whitespace-nowrap">Rs. {(item.price * item.quantity).toLocaleString()}</p>
+                        <p className="text-xs md:text-base text-white font-semibold whitespace-nowrap">Rs. {(item.price * item.quantity).toLocaleString()}</p>
                       </div>
                     </div>
                   ))}
@@ -369,8 +369,8 @@ export default function AdminOrdersPage() {
 
               {/* Order Summary */}
               <div>
-                <h3 className="text-base md:text-lg font-semibold text-white mb-2 md:mb-3">Order Summary</h3>
-                <div className="bg-gray-900 p-3 md:p-4 rounded-lg space-y-2 text-sm md:text-base">
+                <h3 className="text-sm md:text-lg font-semibold text-white mb-1.5 md:mb-3">Order Summary</h3>
+                <div className="bg-gray-900 p-2 md:p-4 rounded-lg space-y-1 md:space-y-2 text-xs md:text-base">
                   <div className="flex justify-between text-gray-300">
                     <span>Subtotal:</span>
                     <span>Rs. {selectedOrder.subtotal.toLocaleString()}</span>
@@ -387,11 +387,11 @@ export default function AdminOrdersPage() {
                       <span>- Rs. {selectedOrder.discount.toLocaleString()}</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-white font-semibold text-base md:text-lg pt-2 border-t border-gray-700">
+                  <div className="flex justify-between text-white font-semibold text-sm md:text-lg pt-1 md:pt-2 border-t border-gray-700">
                     <span>Total:</span>
                     <span>Rs. {selectedOrder.total.toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-between text-gray-300 pt-2">
+                  <div className="flex justify-between text-gray-300 pt-1 md:pt-2">
                     <span>Payment Method:</span>
                     <span className="uppercase">{selectedOrder.paymentMethod}</span>
                   </div>
@@ -400,13 +400,13 @@ export default function AdminOrdersPage() {
 
               {/* Update Status */}
               <div>
-                <h3 className="text-base md:text-lg font-semibold text-white mb-2 md:mb-3">Update Order Status</h3>
-                <div className="flex gap-2 flex-wrap">
+                <h3 className="text-sm md:text-lg font-semibold text-white mb-1.5 md:mb-3">Update Order Status</h3>
+                <div className="flex gap-1.5 md:gap-2 flex-wrap">
                   {['pending', 'processing', 'shipped', 'delivered', 'cancelled'].map((status) => (
                     <button
                       key={status}
                       onClick={() => updateOrderStatus(selectedOrder._id, status)}
-                      className={`px-3 md:px-4 py-2 rounded-lg capitalize transition-colors text-sm md:text-base ${
+                      className={`px-2 md:px-4 py-1.5 md:py-2 rounded-lg capitalize transition-colors text-xs md:text-base ${
                         selectedOrder.status === status
                           ? 'bg-pink-600 text-white'
                           : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
